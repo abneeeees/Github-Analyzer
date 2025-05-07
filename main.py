@@ -1,3 +1,4 @@
+#in development right now
 import requests
 from bs4 import BeautifulSoup as bs
 
@@ -26,7 +27,6 @@ def repo():
     
     i=1
     for li in repos:
-        # all_data = li.find('h3' , attrs={'class' : 'wb-break-all'})
         all_data = li.select('h3.wb-break-all')[0]
 
         link = all_data.find_all('a')
