@@ -1,2 +1,2 @@
 # Github-Analyzer
-Analyzes your github profile
+Analyzes your github profile (WIP)
