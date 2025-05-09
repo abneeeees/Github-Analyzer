@@ -21,6 +21,17 @@ def name():
     except:
         print("no info")
 
+def socials():
+    a = soup1.select("ul.vcard-details")[0]
+    names = a.find_all("title")
+    text = [c.get_text() for c in names]
+
+    links = a.find_all('a')
+    text1 = [c.get_text() for c in links]
+
+    for index ,  (social , links) in enumerate (zip(text1[1:] , text)):
+        print(links  , ": ", social)
+
 def repo():
     a = soup2.find('div' , attrs={ "id" : "user-repositories-list"})
     repos = a.ul.find_all('li')
