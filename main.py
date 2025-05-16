@@ -1,64 +1,52 @@
-#in development right now
-import requests
-from bs4 import BeautifulSoup as bs
+''' IN DEVELOPMENT RIGHT NOW'''
+from selenium import webdriver
+from selenium.webdriver.common.by import By
 
+op = webdriver.ChromeOptions()
+op.add_argument('headless')
+driver = webdriver.Chrome(options=op)
+url = "https://github.com/AvneeshKumar01"
+driver.get(url=url)
 
-url = 'https://github.com/AvneeshKumar01'
-
-response1 = requests.get('https://github.com/AvneeshKumar01')
-soup1 = bs(response1.content , "html.parser")
-
-response2 = requests.get("https://github.com/AvneeshKumar01?tab=repositories")
-soup2 = bs(response2.content , "html.parser")
-
-def name():
-    a = soup1.select('h1.vcard-names')[0]
-    words = a.find_all('span')
-    data = [str(c.getText()).strip() for c in words]
-    try :
-        print(f"User-Name :   {data[1]}")
-        print(f"Name      :   {data[0]}")
-    except:
-        print("no info")
-
-def socials():
-    a = soup1.select("ul.vcard-details")[0]
-    names = a.find_all("title")
-    text = [c.get_text() for c in names]
-
-    links = a.find_all('a')
-    text1 = [c.get_text() for c in links]
-
-    for index ,  (social , links) in enumerate (zip(text1[1:] , text)):
-        print(links  , ": ", social)
-
-def repo():
-    a = soup2.find('div' , attrs={ "id" : "user-repositories-list"})
-    repos = a.ul.find_all('li')
+class BasicInf0 :
+    def name(self):
+        name = driver.find_element(By.CSS_SELECTOR , "span.p-name.vcard-fullname.d-block.overflow-hidden").text
+        user_name = driver.find_element(By.CSS_SELECTOR , "span.p-nickname.vcard-username.d-block").text
+        print(f"{name}  {user_name}")
     
-    i=1
-    for li in repos:
-        all_data = li.select('h3.wb-break-all')[0]
+    def socials(self):
+        ulist_of_socials = driver.find_elements(By.CSS_SELECTOR , "li.vcard-detail.pt-1 > a")
+        names = driver.find_elements(By.TAG_NAME, "title")
 
-        link = all_data.find_all('a')
-        final_link = 'https://github.com'+link[0]['href']
-        word = [(str(c.string).strip()) for c in link]
-        
-        print(i , word[0] , ":" , final_link)
-        i+=1
+        for name , link in zip(names , ulist_of_socials):
+            print(f"{name.text} : {link.get_attribute('href')}")
 
-        desc = li.find_all('p')
-        full_desc = [str(c.string).strip() for c in desc]
 
-        try :
-            print("Description :" , full_desc[0])
-        except:
-            print("NO description written")
 
-        print("\n")
+    def repo(self):
+        params = "?tab=repositories"
+        driver.get(url+params)
 
-name()
-print("\n")
-repo()
-print("\n")
+        repo_names = driver.find_elements(By.CSS_SELECTOR , "h3.wb-break-all > a")
+        desc = driver.find_elements(By.CSS_SELECTOR , "div.col-10.col-lg-9.d-inline-block > div:nth-child(2)")
+
+        i=1
+        for ele1 , ele2 in  zip(repo_names , desc) :
+            print(f"{i}.) {ele1.text} : {ele1.get_attribute("href")}")
+            i = i+1
+
+            try:
+                print(f"   description : {ele2.text}\n")
+            except:
+                print("NO description written")
+
+    def repo_insider():
+        pass
+
+obj = BasicInf0()
+# obj.name()
+# obj.socials()
+# obj.repo()
+
+
 
