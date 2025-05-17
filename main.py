@@ -42,10 +42,9 @@ class BasicInf0 :
             # except:
             #     print("NO description written")
 
-obj = BasicInf0()
-# obj.name()
-# obj.socials()
-# obj.repo()
+boj = BasicInf0()
+boj.repo()
+collected_links = boj.to_store_repos
 
 
 class RepoInsider(BasicInf0):
@@ -74,6 +73,9 @@ class RepoInsider(BasicInf0):
 
         print(f"Total stars : {self.total_stars}")
         print(f"Total commits : {self.total_commit}")
+
+obj = RepoInsider(collected_links)
+obj.all_repo_insider()
 
 class Personal():
 
