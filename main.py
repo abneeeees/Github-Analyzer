@@ -53,6 +53,7 @@ class RepoInsider(BasicInf0):
         self.to_store_repos = to_store_repos
         self.total_commit = 0
         self.total_stars = 0
+        self.total_lang = set()
 
     def no_of_stars(self):
         stars = driver.find_element(By.CSS_SELECTOR , "a.Link.Link--muted > strong")
@@ -64,13 +65,19 @@ class RepoInsider(BasicInf0):
         commit_list = [int(nums) for nums in numbers ]
         self.total_commit += commit_list[0]
 
+    def no_of_languages(self):
+        self.lang = driver.find_elements(By.CSS_SELECTOR , 'span.color-fg-default.text-bold.mr-1')
+        for a in self.lang:
+            self.total_lang.add(a.text)
 
     def all_repo_insider(self):
         for links in self.to_store_repos:
             driver.get(links)
             self.no_of_stars()
             self.no_of_commits()
+            self.no_of_languages()
 
+        print(self.total_lang)
         print(f"Total stars : {self.total_stars}")
         print(f"Total commits : {self.total_commit}")
 
