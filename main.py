@@ -1,5 +1,6 @@
 ''' IN DEVELOPMENT RIGHT NOW'''
 from selenium import webdriver
+import re
 from selenium.webdriver.common.by import By
 
 op = webdriver.ChromeOptions()
@@ -49,4 +50,29 @@ obj = BasicInf0()
 # obj.repo()
 
 
+class RepoInsider(BasicInf0):
 
+    def __init__(self , to_store_repos):
+        self.to_store_repos = to_store_repos
+        self.total_commit = 0
+        self.total_stars = 0
+
+    def no_of_stars(self):
+        stars = driver.find_element(By.CSS_SELECTOR , "a.Link.Link--muted > strong")
+        self.total_stars += int(stars.text)
+
+    def no_of_commits(self):
+        commits = driver.find_element(By.CSS_SELECTOR , 'span.fgColor-default')
+        numbers = re.findall(r'\d+', commits.text)
+        commit_list = [int(nums) for nums in numbers ]
+        self.total_commit += commit_list[0]
+
+
+    def all_repo_insider(self):
+        for links in self.to_store_repos:
+            driver.get(links)
+            self.no_of_stars()
+            self.no_of_commits()
+
+        print(f"Total stars : {self.total_stars}")
+        print(f"Total commits : {self.total_commit}")
