@@ -10,6 +10,10 @@ url = "https://github.com/AvneeshKumar01"
 driver.get(url=url)
 
 class BasicInf0 :
+    
+    def __init__(self):
+        self.to_store_repos = []
+    
     def name(self):
         name = driver.find_element(By.CSS_SELECTOR , "span.p-name.vcard-fullname.d-block.overflow-hidden").text
         user_name = driver.find_element(By.CSS_SELECTOR , "span.p-nickname.vcard-username.d-block").text
@@ -22,8 +26,6 @@ class BasicInf0 :
         for name , link in zip(names , ulist_of_socials):
             print(f"{name.text} : {link.get_attribute('href')}")
 
-
-
     def repo(self):
         params = "?tab=repositories"
         driver.get(url+params)
@@ -31,18 +33,14 @@ class BasicInf0 :
         repo_names = driver.find_elements(By.CSS_SELECTOR , "h3.wb-break-all > a")
         desc = driver.find_elements(By.CSS_SELECTOR , "div.col-10.col-lg-9.d-inline-block > div:nth-child(2)")
 
-        i=1
-        for ele1 , ele2 in  zip(repo_names , desc) :
-            print(f"{i}.) {ele1.text} : {ele1.get_attribute("href")}")
-            i = i+1
+        for i, (ele1, ele2) in enumerate(zip(repo_names, desc), start=1):
+            # print(f"{i}.) {ele1.text} : {ele1.get_attribute('href')}")
+            self.to_store_repos.append(ele1.get_attribute('href'))
 
-            try:
-                print(f"   description : {ele2.text}\n")
-            except:
-                print("NO description written")
-
-    def repo_insider():
-        pass
+            # try:
+            #     print(f"   description : {ele2.text}\n")
+            # except:
+            #     print("NO description written")
 
 obj = BasicInf0()
 # obj.name()
