@@ -76,3 +76,24 @@ class RepoInsider(BasicInf0):
 
         print(f"Total stars : {self.total_stars}")
         print(f"Total commits : {self.total_commit}")
+
+class Personal():
+
+    def followers_and_follwing(self):
+        self.infos = driver.find_elements(By.CSS_SELECTOR , "div.mb-3 > a > span")
+
+        self.list_for_ratio = []
+        for self.info in self.infos:
+            self.list_for_ratio.append(self.info.text)
+
+    def no_of_repos(self):
+        counter = driver.find_element(By.CSS_SELECTOR , "#repositories-tab > span.Counter")
+        print(counter.text)
+
+    def follower_to_follwing_ratio(self):
+        ratio = int(self.list_for_ratio[0])/int(self.list_for_ratio[1])
+        print(ratio)
+
+
+    def profile_completion(self):
+        pass
