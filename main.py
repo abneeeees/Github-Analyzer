@@ -13,6 +13,7 @@ class BasicInf0 :
     
     def __init__(self):
         self.to_store_repos = []
+        self.i = 0
     
     def name(self):
         name = driver.find_element(By.CSS_SELECTOR , "span.p-name.vcard-fullname.d-block.overflow-hidden").text
@@ -33,9 +34,10 @@ class BasicInf0 :
         repo_names = driver.find_elements(By.CSS_SELECTOR , "h3.wb-break-all > a")
         desc = driver.find_elements(By.CSS_SELECTOR , "div.col-10.col-lg-9.d-inline-block > div:nth-child(2)")
 
-        for i, (ele1, ele2) in enumerate(zip(repo_names, desc), start=1):
+        for(ele1, ele2) in (zip(repo_names, desc)):
             # print(f"{i}.) {ele1.text} : {ele1.get_attribute('href')}")
             self.to_store_repos.append(ele1.get_attribute('href'))
+            self.i += 1
 
             # try:
             #     print(f"   description : {ele2.text}\n")
@@ -45,6 +47,7 @@ class BasicInf0 :
 boj = BasicInf0()
 boj.repo()
 collected_links = boj.to_store_repos
+no_of_repo = boj.i
 
 
 class RepoInsider(BasicInf0):
@@ -86,6 +89,9 @@ obj.all_repo_insider()
 
 class Personal():
 
+    def __init__(self , i):
+        self.i = i
+
     def followers_and_follwing(self):
         self.infos = driver.find_elements(By.CSS_SELECTOR , "div.mb-3 > a > span")
 
@@ -94,8 +100,7 @@ class Personal():
             self.list_for_ratio.append(self.info.text)
 
     def no_of_repos(self):
-        counter = driver.find_element(By.CSS_SELECTOR , "#repositories-tab > span.Counter")
-        print(counter.text)
+        print(self.i)
 
     def follower_to_follwing_ratio(self):
         ratio = int(self.list_for_ratio[0])/int(self.list_for_ratio[1])
@@ -104,3 +109,6 @@ class Personal():
 
     def profile_completion(self):
         pass
+
+obj = Personal(no_of_repo)
+obj.no_of_repos()
