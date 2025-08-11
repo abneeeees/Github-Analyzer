@@ -1,4 +1,3 @@
-''' IN DEVELOPMENT RIGHT NOW'''
 from selenium import webdriver
 import re
 from selenium.webdriver.common.by import By
@@ -6,8 +5,8 @@ from selenium.webdriver.common.by import By
 op = webdriver.ChromeOptions()
 op.add_argument('headless')
 driver = webdriver.Chrome(options=op)
-url = "https://github.com/AvneeshKumar01"
-driver.get(url=url)
+url = input("PASTE YOUR ACCOUNT'S URL : ")
+driver.get(url=f'https://github.com/{input}')
 
 class BasicInf0 :
     
