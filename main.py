@@ -34,14 +34,14 @@ class BasicInf0 :
         desc = driver.find_elements(By.CSS_SELECTOR , "div.col-10.col-lg-9.d-inline-block > div:nth-child(2)")
 
         for(ele1, ele2) in (zip(repo_names, desc)):
-            # print(f"{i}.) {ele1.text} : {ele1.get_attribute('href')}")
+            print(f"{i}.) {ele1.text} : {ele1.get_attribute('href')}")
             self.to_store_repos.append(ele1.get_attribute('href'))
             self.i += 1
 
-            # try:
-            #     print(f"   description : {ele2.text}\n")
-            # except:
-            #     print("NO description written")
+            try:
+                print(f"   description : {ele2.text}\n")
+            except:
+                print("NO description written")
 
 boj = BasicInf0()
 boj.repo()
